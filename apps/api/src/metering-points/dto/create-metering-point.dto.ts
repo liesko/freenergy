@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsEnum, IsOptional, MaxLength } from 'class-validator';
-import { MeteringPointType } from 'database';
+import { MeteringPointType } from '@prisma/client';
 
 export class CreateMeteringPointDto {
   @IsString()

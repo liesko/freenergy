@@ -1,5 +1,5 @@
 import { IsBoolean, IsEnum, IsOptional } from 'class-validator';
-import { AcceptedMeteringPointType } from 'database';
+import { AcceptedMeteringPointType } from '@prisma/client';
 
 export class UpdateGroupPoliciesDto {
   @IsOptional()

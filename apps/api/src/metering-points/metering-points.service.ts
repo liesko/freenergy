@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateMeteringPointDto } from './dto/create-metering-point.dto';
-import { Prisma } from 'database';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class MeteringPointsService {
