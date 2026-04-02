@@ -1,0 +1,21 @@
+{
+  "name": "zdielana-elektrina-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel -r dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "db:migrate": "pnpm --filter database migrate:dev",
+    "db:deploy": "pnpm --filter database migrate:deploy",
+    "db:seed": "pnpm --filter database seed",
+    "db:generate": "pnpm --filter database generate"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

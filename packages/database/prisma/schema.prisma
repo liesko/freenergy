@@ -1,0 +1,161 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Minimal test entity to verify DB connectivity setup
+model SystemVerification {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status    String   @default("active")
+  notes     String?
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  firstName    String?
+  lastName     String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt           DateTime          @updatedAt
+  ownedGroups         Group[]           @relation("GroupOwner")
+  memberships         Membership[]
+  receivedInvitations GroupInvitation[] @relation("ReceivedInvitations")
+  sentInvitations     GroupInvitation[] @relation("SentInvitations")
+  meteringPoints      MeteringPoint[]
+  joinRequests        GroupJoinRequest[]
+  sentMeteringPointInvitations GroupMeteringPointInvitation[] @relation("SentMpInvitations")
+}
+
+enum AcceptedMeteringPointType {
+  BOTH
+  PRODUCTION_ONLY
+  CONSUMPTION_ONLY
+}
+
+model Group {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  ownerId     String
+  owner               User              @relation("GroupOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  isDiscoverable      Boolean           @default(false)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  memberships         Membership[]
+  invitations         GroupInvitation[]
+  meteringPoints      MeteringPoint[]
+  joinRequests            GroupJoinRequest[]
+  meteringPointInvitations GroupMeteringPointInvitation[]
+  
+  // Group Operational Policies
+  isActive                   Boolean                    @default(true)
+  acceptsJoinRequests        Boolean                    @default(true)
+  acceptsInvitations         Boolean                    @default(true)
+  acceptedMeteringPointTypes AcceptedMeteringPointType  @default(BOTH)
+}
+
+enum MembershipRole {
+  OWNER
+  MEMBER
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELLED
+}
+
+model Membership {
+  id        String         @id @default(cuid())
+  userId    String
+  groupId   String
+  role      MembershipRole @default(MEMBER)
+  createdAt DateTime       @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, groupId])
+}
+
+model GroupInvitation {
+  id              String           @id @default(cuid())
+  groupId         String
+  invitedUserId   String
+  invitedByUserId String
+  status          InvitationStatus @default(PENDING)
+  createdAt       DateTime         @default(now())
+  respondedAt     DateTime?
+
+  group         Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  invitedUser   User  @relation("ReceivedInvitations", fields: [invitedUserId], references: [id], onDelete: Cascade)
+  invitedByUser User  @relation("SentInvitations", fields: [invitedByUserId], references: [id], onDelete: Cascade)
+}
+
+enum MeteringPointType {
+  PRODUCTION
+  CONSUMPTION
+}
+
+model MeteringPoint {
+  id        String            @id @default(cuid())
+  eic       String            @unique
+  name      String?
+  type      MeteringPointType
+  userId    String
+  groupId   String?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group Group? @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  joinRequests GroupJoinRequest[]
+  invitations  GroupMeteringPointInvitation[]
+}
+
+enum JoinRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELLED
+}
+
+model GroupJoinRequest {
+  id                String            @id @default(cuid())
+  groupId           String
+  meteringPointId   String
+  requestedByUserId String
+  status            JoinRequestStatus @default(PENDING)
+  createdAt         DateTime          @default(now())
+  respondedAt       DateTime?
+
+  group         Group         @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  meteringPoint MeteringPoint @relation(fields: [meteringPointId], references: [id], onDelete: Cascade)
+  requestedByUser User        @relation(fields: [requestedByUserId], references: [id], onDelete: Cascade)
+
+
+}
+
+model GroupMeteringPointInvitation {
+  id              String            @id @default(cuid())
+  groupId         String
+  meteringPointId String
+  invitedByUserId String
+  status          InvitationStatus  @default(PENDING)
+  createdAt       DateTime          @default(now())
+  respondedAt     DateTime?
+
+  group           Group         @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  meteringPoint   MeteringPoint @relation(fields: [meteringPointId], references: [id], onDelete: Cascade)
+  invitedByUser   User          @relation("SentMpInvitations", fields: [invitedByUserId], references: [id], onDelete: Cascade)
+}
