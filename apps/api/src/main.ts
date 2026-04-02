@@ -11,10 +11,8 @@ async function bootstrap() {
   // Security
   app.use(helmet());
   app.use(cookieParser());
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-  logger.log(`Frontend URL for CORS: ${frontendUrl}`);
   app.enableCors({
-    origin: frontendUrl,
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
   });
 
