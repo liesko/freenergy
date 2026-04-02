@@ -34,19 +34,19 @@ export function Navigation() {
               href="/groups" 
               className={`text-sm font-semibold transition-colors hover:text-emerald-700 ${isActive('/groups') ? 'text-emerald-700 border-b-2 border-emerald-600 pb-[18px] pt-[20px]' : 'text-slate-600 py-5'}`}
             >
-              My Networks
+              Moje skupiny
             </Link>
             <Link 
               href="/metering-points" 
               className={`text-sm font-semibold transition-colors hover:text-emerald-700 ${isActive('/metering-points') ? 'text-emerald-700 border-b-2 border-emerald-600 pb-[18px] pt-[20px]' : 'text-slate-600 py-5'}`}
             >
-              My Assets (EIC)
+              Pripojené miesta (EIC)
             </Link>
             <Link 
               href="/invitations" 
               className={`text-sm font-semibold transition-colors hover:text-emerald-700 ${isActive('/invitations') || isActive('/metering-point-invitations') ? 'text-emerald-700 border-b-2 border-emerald-600 pb-[18px] pt-[20px]' : 'text-slate-600 py-5'}`}
             >
-              Inbox
+              Pozvánky
             </Link>
           </div>
         </div>

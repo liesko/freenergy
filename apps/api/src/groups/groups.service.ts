@@ -167,9 +167,14 @@ export class GroupsService {
     });
   }
 
-  async findDiscoverableGroups() {
+  async findDiscoverableGroups(query?: string) {
+    const whereClause: any = { isDiscoverable: true };
+    if (query) {
+      whereClause.name = { contains: query, mode: 'insensitive' };
+    }
+
     return this.prisma.group.findMany({
-      where: { isDiscoverable: true },
+      where: whereClause,
       select: {
         id: true,
         name: true,

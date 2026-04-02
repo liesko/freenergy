@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Body, Param, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, Param, UseGuards, Req, Query } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { AuthGuard } from '../auth/auth.guard';
@@ -37,8 +37,8 @@ export class GroupsController {
   }
 
   @Get('discoverable')
-  findDiscoverable() {
-    return this.groupsService.findDiscoverableGroups();
+  findDiscoverable(@Query('q') query?: string) {
+    return this.groupsService.findDiscoverableGroups(query);
   }
 
   @Get(':id')

@@ -35,7 +35,7 @@ export class InvitationsService {
     if (!invite) {
       throw new NotFoundException('Pozvánka nebola nájdená alebo už nečaká na vybavenie.');
     }
-    return this.prisma.$transaction(async (tx) => {
+    return this.prisma.$transaction(async (tx: any) => {
       const updated = await tx.groupInvitation.update({
         where: { id: invite.id },
         data: {

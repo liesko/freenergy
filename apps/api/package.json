@@ -31,6 +31,7 @@
     "class-validator": "^0.15.1",
     "cookie-parser": "^1.4.7",
     "database": "workspace:*",
+    "@prisma/client": "^6.4.1",
     "helmet": "^8.1.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"

@@ -45,7 +45,7 @@ export default async function GroupsPage() {
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Moje skupiny</h1>
           <div className="flex gap-4 items-center">
             <Link href="/groups/discover" className="text-sm font-semibold bg-white text-emerald-700 border border-emerald-200 shadow-sm hover:bg-emerald-50 hover:border-emerald-300 transition px-4 py-2 rounded-lg">
-              Obajvovať verejné skupiny
+              Prehľad Verejných skupín
             </Link>
           </div>
         </div>

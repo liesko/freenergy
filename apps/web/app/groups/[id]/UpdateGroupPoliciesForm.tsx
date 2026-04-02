@@ -61,65 +61,65 @@ export default function UpdateGroupPoliciesForm({ groupId, initialPolicies }: Up
   };
 
   return (
-    <div className="border border-neutral-800 rounded-lg p-6 bg-neutral-900 mt-4">
-      <h2 className="text-xl font-semibold mb-4 text-white">Prevádzkové politiky skupiny</h2>
-      <p className="text-sm text-neutral-400 mb-6">Spravujte, ako táto skupina narába so zariadeniami a žiadosťami o pripojenie.</p>
+    <div className="border border-slate-200 rounded-xl p-6 bg-white shadow-sm mt-4">
+      <h2 className="text-xl font-bold mb-3 text-slate-900">Prevádzkové politiky skupiny</h2>
+      <p className="text-sm text-slate-500 mb-6">Spravujte, ako táto skupina narába so zariadeniami a žiadosťami o pripojenie.</p>
 
-      {error && <div className="text-red-500 text-sm p-3 bg-red-900/20 border border-red-800 rounded mb-4">{error}</div>}
-      {success && <div className="text-emerald-400 text-sm p-3 bg-emerald-900/20 border border-emerald-800 rounded mb-4">Politiky boli úspešne aktualizované.</div>}
+      {error && <div className="text-red-700 text-sm p-3 bg-red-50 border border-red-200 rounded-lg mb-4">{error}</div>}
+      {success && <div className="text-emerald-700 text-sm p-3 bg-emerald-50 border border-emerald-200 rounded-lg mb-4">Politiky boli úspešne aktualizované.</div>}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         
         {/* Is Active Toggle */}
-        <label className="flex items-center justify-between p-3 border border-neutral-800 rounded hover:bg-neutral-800/50 cursor-pointer transition">
+        <label className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition shadow-sm">
           <div className="flex flex-col gap-1">
-            <span className="font-semibold text-neutral-200">Skupina je aktívna</span>
-            <span className="text-xs text-neutral-500">Povoľte alebo zakážte všetky hlavné operácie v tejto skupine.</span>
+            <span className="font-bold text-slate-800">Skupina je aktívna</span>
+            <span className="text-xs text-slate-500 w-4/5">Povoľte alebo zakážte všetky hlavné operácie v tejto skupine.</span>
           </div>
           <input 
             type="checkbox" 
             checked={isActive} 
             onChange={(e) => setIsActive(e.target.checked)}
-            className="w-5 h-5 accent-emerald-500 cursor-pointer"
+            className="w-5 h-5 accent-emerald-600 cursor-pointer rounded"
           />
         </label>
 
         {/* Join Requests Toggle */}
-        <label className="flex items-center justify-between p-3 border border-neutral-800 rounded hover:bg-neutral-800/50 cursor-pointer transition">
+        <label className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition shadow-sm">
           <div className="flex flex-col gap-1">
-            <span className="font-semibold text-neutral-200">Prijať žiadosti o pripojenie</span>
-            <span className="text-xs text-neutral-500">Umožnite používateľom objaviť a požiadať o pripojenie ich zariadení.</span>
+            <span className="font-bold text-slate-800">Prijať žiadosti o pripojenie</span>
+            <span className="text-xs text-slate-500 w-4/5">Umožnite používateľom objaviť a požiadať o pripojenie ich zariadení.</span>
           </div>
           <input 
             type="checkbox" 
             checked={acceptsJoinRequests} 
             onChange={(e) => setAcceptsJoinRequests(e.target.checked)}
-            className="w-5 h-5 accent-emerald-500 cursor-pointer"
+            className="w-5 h-5 accent-emerald-600 cursor-pointer rounded"
           />
         </label>
 
         {/* Invitations Toggle */}
-        <label className="flex items-center justify-between p-3 border border-neutral-800 rounded hover:bg-neutral-800/50 cursor-pointer transition">
+        <label className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition shadow-sm">
           <div className="flex flex-col gap-1">
-            <span className="font-semibold text-neutral-200">Pozvánky pre zariadenia povolené</span>
-            <span className="text-xs text-neutral-500">Umožnite vlastníkom aktívne pozývať voľné EIC.</span>
+            <span className="font-bold text-slate-800">Pozvánky pre zariadenia povolené</span>
+            <span className="text-xs text-slate-500 w-4/5">Umožnite vlastníkom aktívne pozývať voľné EIC.</span>
           </div>
           <input 
             type="checkbox" 
             checked={acceptsInvitations} 
             onChange={(e) => setAcceptsInvitations(e.target.checked)}
-            className="w-5 h-5 accent-emerald-500 cursor-pointer"
+            className="w-5 h-5 accent-emerald-600 cursor-pointer rounded"
           />
         </label>
 
         {/* Accepted Type Selector */}
-        <div className="flex flex-col gap-2 p-3 border border-neutral-800 rounded">
-          <span className="font-semibold text-neutral-200">Akceptované typy zariadení</span>
-          <span className="text-xs text-neutral-500 mb-2">Obmedzte prijímanie na špecifické typy zariadení. Neovplyvní to už priradené zariadenia.</span>
+        <div className="flex flex-col gap-2 p-4 border border-slate-200 rounded-xl shadow-sm bg-white">
+          <span className="font-bold text-slate-800">Akceptované typy zariadení</span>
+          <span className="text-xs text-slate-500 mb-2">Obmedzte prijímanie na špecifické typy zariadení. Neovplyvní to už priradené zariadenia.</span>
           <select 
             value={acceptedTypes} 
             onChange={(e) => setAcceptedTypes(e.target.value as any)}
-            className="p-2 bg-black border border-neutral-700 text-sm rounded outline-none focus:border-neutral-500 text-white"
+            className="p-2.5 bg-white border border-slate-300 text-sm rounded-lg outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-900 transition-all font-medium hover:border-slate-400 cursor-pointer"
           >
             <option value="BOTH">OBE (Výrobné aj Odberné)</option>
             <option value="PRODUCTION_ONLY">IBA VÝROBNÉ</option>
@@ -130,7 +130,7 @@ export default function UpdateGroupPoliciesForm({ groupId, initialPolicies }: Up
         <button 
           type="submit" 
           disabled={isLoading}
-          className="mt-2 self-start px-6 py-2 bg-white text-black font-semibold rounded hover:bg-neutral-200 transition disabled:opacity-50"
+          className="mt-4 self-start px-6 py-2.5 bg-emerald-600 text-white font-bold rounded-lg shadow-sm hover:bg-emerald-700 transition disabled:opacity-50"
         >
           {isLoading ? 'Ukladám...' : 'Uložiť politiky'}
         </button>

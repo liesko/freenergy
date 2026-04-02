@@ -39,27 +39,27 @@ export default function InviteMeteringPointForm({ groupId }: { groupId: string }
   };
 
   return (
-    <div className="border border-neutral-800 p-6 rounded-lg bg-neutral-900 flex flex-col gap-4 mt-6">
-      <h2 className="text-xl font-semibold">Pozvať zariadenie podľa EIC</h2>
-      <p className="text-sm text-neutral-400">
+    <div className="border border-slate-200 p-6 rounded-xl bg-white shadow-sm flex flex-col gap-4 mt-6">
+      <h2 className="text-xl font-bold text-slate-900">Pozvať zariadenie podľa EIC</h2>
+      <p className="text-sm text-slate-500">
         Zadajte presné EIC aktuálne dostupného zariadenia pre odoslanie oficiálnej pozvánky jeho vlastníkovi.
       </p>
       <form onSubmit={handleInvite} className="flex flex-col gap-3">
-        <label className="flex flex-col gap-1 text-sm font-semibold text-neutral-300">
+        <label className="flex flex-col gap-1 text-sm font-semibold text-slate-700">
           EIC kód
           <input
             type="text"
             value={eic}
             onChange={e => setEic(e.target.value)}
-            placeholder="e.g. 24Z1234567890ABC"
-            className="p-2 rounded bg-neutral-950 border border-neutral-700 focus:outline-none focus:border-emerald-500 font-mono text-sm"
+            placeholder="Napr. 24Z1234567890ABC"
+            className="p-2.5 rounded-lg bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-mono text-sm text-slate-900 transition-all placeholder:text-slate-400"
             required
           />
         </label>
         <button
           type="submit"
           disabled={isLoading || !eic.trim()}
-          className="self-start mt-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded transition-colors disabled:opacity-50"
+          className="self-start mt-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-sm transition-colors disabled:opacity-50"
         >
           {isLoading ? 'Odosielam...' : 'Odoslať pozvánku'}
         </button>

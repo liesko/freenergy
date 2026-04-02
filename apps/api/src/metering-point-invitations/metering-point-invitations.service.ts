@@ -29,7 +29,7 @@ export class MeteringPointInvitationsService {
     if (invitation.status !== 'PENDING') throw new BadRequestException(`Pozvánka už je v stave ${invitation.status}`);
     if (invitation.meteringPoint.userId !== userId) throw new BadRequestException('Iba vlastník zariadenia môže prijať túto pozvánku');
 
-    return this.prisma.$transaction(async (tx) => {
+    return this.prisma.$transaction(async (tx: any) => {
       // Re-verify the asset is strictly free
       const point = await tx.meteringPoint.findUnique({ where: { id: invitation.meteringPointId } });
       if (point?.groupId) throw new BadRequestException('Zariadenie bolo medzitým priradené inam');

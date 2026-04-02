@@ -58,62 +58,62 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-black text-white">
-      <main className="flex flex-col gap-6 items-center p-8 bg-neutral-900 rounded-lg shadow-xl w-full max-w-sm">
-        <h1 className="text-2xl font-semibold">Registrácia</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-slate-50 text-slate-900 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-6 items-center p-8 bg-white border border-slate-200 rounded-xl shadow-sm w-full max-w-sm">
+        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Registrácia</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-          {error && <div className="text-red-500 text-sm p-2 bg-red-500/10 rounded">{error}</div>}
-          <div className="flex gap-2 w-full">
-            <div className="flex flex-col gap-1 w-1/2">
-              <label className="text-sm text-neutral-400">Meno</label>
+          {error && <div className="text-red-700 text-sm p-3 bg-red-50 border border-red-200 rounded-lg">{error}</div>}
+          <div className="flex gap-3 w-full">
+            <div className="flex flex-col gap-1.5 w-1/2">
+               <label className="text-sm font-semibold text-slate-700">Meno</label>
               <input
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="p-2 bg-neutral-800 rounded border border-neutral-700 outline-none focus:border-neutral-500 w-full"
+                className="p-2.5 bg-white border border-slate-300 text-sm rounded-lg outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-900 transition-all w-full"
               />
             </div>
-            <div className="flex flex-col gap-1 w-1/2">
-              <label className="text-sm text-neutral-400">Priezvisko</label>
+            <div className="flex flex-col gap-1.5 w-1/2">
+              <label className="text-sm font-semibold text-slate-700">Priezvisko</label>
               <input
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="p-2 bg-neutral-800 rounded border border-neutral-700 outline-none focus:border-neutral-500 w-full"
+                className="p-2.5 bg-white border border-slate-300 text-sm rounded-lg outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-900 transition-all w-full"
               />
             </div>
           </div>
-          <div className="flex flex-col gap-1 w-full">
-            <label className="text-sm text-neutral-400">Email <span className="text-red-500">*</span></label>
+          <div className="flex flex-col gap-1.5 w-full mt-1">
+            <label className="text-sm font-semibold text-slate-700">Email <span className="text-red-500">*</span></label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="p-2 bg-neutral-800 rounded border border-neutral-700 outline-none focus:border-neutral-500 w-full"
+              className="p-2.5 bg-white border border-slate-300 text-sm rounded-lg outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-900 transition-all w-full"
             />
           </div>
-          <div className="flex flex-col gap-1 w-full">
-            <label className="text-sm text-neutral-400">Heslo <span className="text-red-500">*</span></label>
+          <div className="flex flex-col gap-1.5 w-full">
+             <label className="text-sm font-semibold text-slate-700">Heslo <span className="text-red-500">*</span></label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="p-2 bg-neutral-800 rounded border border-neutral-700 outline-none focus:border-neutral-500 w-full"
+              className="p-2.5 bg-white border border-slate-300 text-sm rounded-lg outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-900 transition-all w-full"
             />
           </div>
           <button
             type="submit"
             disabled={isLoading}
-            className="mt-4 p-2 bg-white text-black font-semibold rounded hover:bg-neutral-200 transition disabled:opacity-50"
+            className="mt-3 p-2.5 bg-emerald-600 text-white font-bold rounded-lg shadow-sm hover:bg-emerald-700 transition disabled:opacity-50 w-full"
           >
             {isLoading ? 'Vytváram účet...' : 'Vytvoriť účet'}
           </button>
         </form>
-        <p className="text-sm text-neutral-400">
-          Už máte účet? <a href="/login" className="text-white hover:underline">Prihlásiť sa</a>
+        <p className="text-sm text-slate-600">
+          Už máte účet? <a href="/login" className="text-emerald-600 font-semibold hover:text-emerald-700 hover:underline">Prihlásiť sa</a>
         </p>
       </main>
     </div>

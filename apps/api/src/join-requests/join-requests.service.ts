@@ -35,7 +35,7 @@ export class JoinRequestsService {
     }
 
     // Transaction-safe approval
-    return this.prisma.$transaction(async (tx) => {
+    return this.prisma.$transaction(async (tx: any) => {
       // 1. Double-check point is still available using read lock logic equivalent inside the transaction
       const point = await tx.meteringPoint.findUnique({
         where: { id: request.meteringPointId },
