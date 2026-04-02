@@ -22,7 +22,7 @@ export class AuthController {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
     });
@@ -33,7 +33,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('logout')
   logout(@Res() res: Response) {
-    res.clearCookie('token', { path: '/' });
+    res.clearCookie('token', { 
+      path: '/',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    });
     res.redirect(process.env.FRONTEND_URL || 'http://localhost:3000');
   }
 
