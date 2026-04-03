@@ -17,12 +17,13 @@ async function bootstrap() {
   const frontendUrl = process.env.FRONTEND_URL;
 
   app.enableCors({
-    origin: [
-      frontendUrl,
-      'https://eloquent-gentleness-production-53eb.up.railway.app',
-      'http://localhost:3000'
-    ].filter(Boolean) as string[],
+    origin: (origin, callback) => {
+      // Plne permisívny CORS pre produkčné ladenie
+      callback(null, origin || true);
+    },
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
   });
 
   // Global Validation

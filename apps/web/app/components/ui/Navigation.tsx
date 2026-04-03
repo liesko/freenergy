@@ -21,10 +21,12 @@ export function Navigation() {
           <div className="flex shrink-0 items-center">
             <Link href="/" className="flex items-center gap-2 group">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600 transition-transform group-hover:scale-110">
-                <path d="M13 2v14"></path>
-                <path d="M7 8l6-6 6 6"></path>
-                <path d="M3 22h18"></path>
-                <path d="M12 22v-6"></path>
+                {/* Vonkajší tvar listu */}
+                <path d="M12 2C8 6 3 9 3 14a9 9 0 0 0 18 0c0-5-5-8-9-12z" />
+                {/* Symbol blesku (elektrina) vo vnútri */}
+                <path d="M13 8l-3 4h4l-3 4" />
+                {/* Stredová žila listu */}
+                <path d="M12 18v1" />
               </svg>
               <span className="font-extrabold text-xl text-slate-900 tracking-tight hidden sm:block">Zdieľaná<span className="text-emerald-600">Elektrina</span></span>
             </Link>
