@@ -1,19 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 export function Navigation() {
-  const pathname = usePathname();
-
-  // Highlight the current route
-  const isActive = (path: string) => {
-    // Exact match for home, startsWith for others to catch sub-pages like /groups/[id]
-    if (path === '/' && pathname === '/') return true;
-    if (path !== '/' && pathname.startsWith(path)) return true;
-    return false;
-  };
-
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,24 +20,18 @@ export function Navigation() {
               <span className="font-extrabold text-xl text-slate-900 tracking-tight hidden sm:block">Zdieľaná<span className="text-emerald-600">Elektrina</span></span>
             </Link>
           </div>
-          <div className="flex gap-4 sm:gap-8 items-center">
+          <div className="flex gap-4 items-center">
             <Link 
-              href="/groups" 
-              className={`text-sm font-semibold transition-colors hover:text-emerald-700 ${isActive('/groups') ? 'text-emerald-700 border-b-2 border-emerald-600 pb-[18px] pt-[20px]' : 'text-slate-600 py-5'}`}
+              href="/login" 
+              className="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition"
             >
-              Moje skupiny
+              Prihlásiť sa
             </Link>
             <Link 
-              href="/metering-points" 
-              className={`text-sm font-semibold transition-colors hover:text-emerald-700 ${isActive('/metering-points') ? 'text-emerald-700 border-b-2 border-emerald-600 pb-[18px] pt-[20px]' : 'text-slate-600 py-5'}`}
+              href="/register" 
+              className="text-sm font-semibold bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 shadow-sm transition"
             >
-              Pripojené miesta (EIC)
-            </Link>
-            <Link 
-              href="/invitations" 
-              className={`text-sm font-semibold transition-colors hover:text-emerald-700 ${isActive('/invitations') || isActive('/metering-point-invitations') ? 'text-emerald-700 border-b-2 border-emerald-600 pb-[18px] pt-[20px]' : 'text-slate-600 py-5'}`}
-            >
-              Pozvánky
+              Vytvoriť účet
             </Link>
           </div>
         </div>

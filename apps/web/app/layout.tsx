@@ -6,17 +6,36 @@ export const metadata: Metadata = {
 };
 
 import { Navigation } from './components/ui/Navigation';
+import { Sidebar } from './components/ui/Sidebar';
+import { cookies } from 'next/headers';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
+  const isLoggedIn = !!token;
+
   return (
     <html lang="sk">
-      <body className="bg-slate-50">
-        <Navigation />
-        {children}
+      <body className="bg-slate-50 relative text-slate-900">
+        {isLoggedIn ? (
+          <div className="flex min-h-screen">
+            <Sidebar />
+            <main className="flex-1 flex flex-col min-w-0 max-md:mt-16">
+              {children}
+            </main>
+          </div>
+        ) : (
+          <div className="flex flex-col min-h-screen">
+            <Navigation />
+            <main className="flex-1">
+              {children}
+            </main>
+          </div>
+        )}
       </body>
     </html>
   );
