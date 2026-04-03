@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import helmet from 'helmet';
@@ -7,10 +8,11 @@ import cookieParser from 'cookie-parser';
 async function bootstrap() {
   console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
   const logger = new Logger('Bootstrap');
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.set('trust proxy', 1);
 
   // Security
-  app.use(helmet());
+  app.use(helmet({ crossOriginResourcePolicy: false, crossOriginOpenerPolicy: false }));
   app.use(cookieParser());
   const frontendUrl = process.env.FRONTEND_URL;
 
@@ -21,8 +23,6 @@ async function bootstrap() {
       'http://localhost:3000'
     ].filter(Boolean) as string[],
     credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept, Authorization',
   });
 
   // Global Validation
