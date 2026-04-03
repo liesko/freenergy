@@ -8,7 +8,7 @@ import { Button } from '../../components/ui/Button';
 
 async function fetchMe(token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/auth/me`, {
       headers: { Cookie: `token=${token}` },
       cache: 'no-store',
@@ -22,7 +22,7 @@ async function fetchMe(token: string) {
 
 async function fetchDiscoverableGroups(token: string, query?: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     let url = `${API_URL}/groups/discoverable`;
     if (query) {
       url += `?q=${encodeURIComponent(query)}`;
@@ -40,7 +40,7 @@ async function fetchDiscoverableGroups(token: string, query?: string) {
 
 async function fetchMyPoints(token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/metering-points`, {
       headers: { Cookie: `token=${token}` },
       cache: 'no-store',

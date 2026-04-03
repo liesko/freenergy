@@ -7,7 +7,7 @@ import { SectionHeader } from '../components/ui/SectionHeader';
 import { Button } from '../components/ui/Button';
 
 async function fetchInvitations(token: string) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+  const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
   try {
     const res = await fetch(`${API_URL}/metering-point-invitations`, {
       headers: { Cookie: `token=${token}` },

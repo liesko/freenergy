@@ -15,7 +15,7 @@ import { Button } from '../../components/ui/Button';
 
 async function fetchGroup(id: string, token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/groups/${id}`, {
       headers: {
         Cookie: `token=${token}`,
@@ -34,7 +34,7 @@ async function fetchGroup(id: string, token: string) {
 
 async function fetchMe(token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/auth/me`, {
       headers: {
         Cookie: `token=${token}`,
@@ -50,7 +50,7 @@ async function fetchMe(token: string) {
 
 async function fetchMembers(id: string, token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/groups/${id}/members`, {
       headers: {
         Cookie: `token=${token}`,
@@ -68,7 +68,7 @@ async function fetchMembers(id: string, token: string) {
 
 async function fetchAssignedPoints(id: string, token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/groups/${id}/metering-points`, {
       headers: {
         Cookie: `token=${token}`,
@@ -84,7 +84,7 @@ async function fetchAssignedPoints(id: string, token: string) {
 
 async function fetchMyPoints(token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/metering-points`, {
       headers: {
         Cookie: `token=${token}`,
@@ -100,7 +100,7 @@ async function fetchMyPoints(token: string) {
 
 async function fetchPendingJoinRequests(id: string, token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/groups/${id}/join-requests`, {
       headers: { Cookie: `token=${token}` },
       cache: 'no-store',

@@ -6,7 +6,7 @@ async function getUser() {
   if (!token) return null;
 
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/auth/me`, {
       headers: {
         Cookie: `token=${token}`,

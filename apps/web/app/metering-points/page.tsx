@@ -9,7 +9,7 @@ import { Badge } from '../components/ui/Badge';
 import { SectionHeader } from '../components/ui/SectionHeader';
 
 async function getMeteringPoints(token: string) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+  const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
   try {
     const res = await fetch(`${API_URL}/metering-points`, {
       headers: {

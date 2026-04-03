@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 async function fetchGroups(token: string) {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     const res = await fetch(`${API_URL}/groups`, {
       headers: {
         Cookie: `token=${token}`,
