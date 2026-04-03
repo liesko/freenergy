@@ -135,4 +135,39 @@ export class JoinRequestsService {
       },
     });
   }
+
+  async findSent(userId: string) {
+    return this.prisma.groupJoinRequest.findMany({
+      where: {
+        meteringPoint: { userId },
+        status: 'PENDING'
+      },
+      include: {
+        group: true,
+        meteringPoint: true
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+  }
+
+  async findReceived(userId: string) {
+    return this.prisma.groupJoinRequest.findMany({
+      where: {
+        group: {
+          OR: [
+            { ownerId: userId },
+            { memberships: { some: { userId, role: 'OWNER' } } }
+          ]
+        },
+        status: 'PENDING'
+      },
+      include: {
+        group: true,
+        meteringPoint: {
+          include: { user: { select: { email: true, firstName: true, lastName: true } } }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+  }
 }

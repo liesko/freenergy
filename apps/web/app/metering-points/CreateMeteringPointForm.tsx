@@ -43,6 +43,7 @@ export default function CreateMeteringPointForm() {
       setEic('');
       setName('');
       setType('CONSUMPTION');
+      router.push('/metering-points');
       router.refresh();
     } catch (err: any) {
       setError(err.message || 'Počas vytvárania sa vyskytla chyba');

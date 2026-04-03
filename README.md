@@ -59,9 +59,9 @@ A protected business entity known as `Group` exists representing an energy-shari
 - **Frontend Views:**
   - `/groups`: A protected RSC loading user groups with a fallback client-form for creation.
   - `/groups/[id]`: Protected detail component rendering metadata, exact membership list, and a conditionally exposed "Invite User Form" purely restricted to OWNERS.
-  - `/invitations`: Dedicated action-view processing inbound requests natively. Shows readable business rules errors on restricted overlaps.
+  - `/invitations`: Dedicated **Centralized Requests Inbox (Žiadosti)** navigating 3 distinct views via query params `?view=`: received EIC requests, sent EIC requests, and standard user invitations.
 - **Future Preparations:** This explicitly lays down the framework to implement EIC-based hardware 'Join Requests' natively, decoupling users from their endpoints.
-- **Intentionally Excluded:** Join requests, Discoverable/Public Groups, Configurable Pricing, Routing Search limits, advanced role management, and OKTE integration are explicitly bypassed in this iteration.
+- **Intentionally Excluded:** Configurable Pricing, Routing Search limits, advanced role management, and OKTE integration are explicitly bypassed in this iteration.
 
 ## Metering Points (EIC) Foundation & Asset Aggregation
 
@@ -84,12 +84,11 @@ A Group can toggle its visibility on the network. Exploring discoverable groups 
 - A user discovers a public group in the `Groups > Discover Public Groups` portal (`/groups/discover`).
 - The user can select one of their *unassigned* and *non-pending* `MeteringPoints` to push as an official application logic via `POST /groups/:id/join-requests`.
 - **Note:** If a `MeteringPoint` has an active pending request, it becomes completely unavailable for new requests to prevent ghost duplication states.
-- The sender can transparently track their outgoing requests on their `/metering-points` page, which explicitly renders `PENDING IN: [Group]` or `ASSIGNED` badges directly.
-- **Cancellation:** If an asset owner changes their mind, they can explicitly **CANCEL** their pending request directly from their `/metering-points` dashboard.
-- The target Group's OWNER receives an asynchronous Request (visible inline on the detailed Group page).
+- The sender can transparently track and **CANCEL** their outgoing requests on their `/metering-points` dashboard, or manage them globally within the centralized **Žiadosti** section (`/invitations?view=sent`).
+- The target Group's OWNER receives an asynchronous Request physically visible in the **Žiadosti** inbox (`/invitations?view=received`).
 - The transaction-safe `Approve` operation (`POST /join-requests/:id/approve`) officially assigns the targeted MeteringPoint into their platform structure and explicitly **CANCELLES** any other cross-domain pending requests or invitations for that exact hardware code.
-- **Group-to-Asset Invitations:** Group Owners can proactively invite any existing, unassigned `MeteringPoint` (by submitting its EIC) into their group directly from the `/groups/[id]` interface (via `POST /groups/:id/metering-point-invitations`). 
-- The Asset Owner will see these invitations in their dedicated Inbox (`/metering-point-invitations`) where they can accept or reject them. Acceptance securely binds the hardware to the Group and drops other pending requests.
+- **Group-to-Asset Invitations:** Group Owners can proactively invite any existing, unassigned `MeteringPoint` (by submitting its EIC) into ANY of their managed groups directly from the centralized **Žiadosti** section via the Global Form found under the **Osobné pozvánky** tab (`/invitations?view=user-invitations`).
+- The Asset Owner will see these invitations in their identical centralized Inbox (`/invitations?view=sent`) where they can accept or reject them. Acceptance securely binds the hardware to the Group and drops other pending requests.
 - **Voluntary Leave:** Asset owners retain definitive control over their deployed hardware. They can freely click the `Leave Group` action located on their `/metering-points` page to unbind their origin instantly.
 - **Evictions:** Conversely, Group Owners possess reciprocal power to aggressively remove/evict any foreign established `MeteringPoint` residing in their group immediately.
 - **Group Policies:** Group owners can restrict asset onboarding natively by modifying operational policies (`PATCH /groups/:id/policies`) via the UI form inside their Group Details.

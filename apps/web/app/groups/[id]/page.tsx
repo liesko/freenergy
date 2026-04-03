@@ -6,7 +6,6 @@ import AssignMeteringPointForm from './AssignMeteringPointForm';
 import HandleJoinRequestForm from './HandleJoinRequestForm';
 import ToggleDiscoverable from './ToggleDiscoverable';
 import RemoveMeteringPointButton from './RemoveMeteringPointButton';
-import InviteMeteringPointForm from './InviteMeteringPointForm';
 import UpdateGroupPoliciesForm from './UpdateGroupPoliciesForm';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -250,7 +249,6 @@ export default async function GroupDetailPage({ params }: PageProps) {
             )}
           </div>
           <AssignMeteringPointForm groupId={group.id} availablePoints={availablePoints} />
-          {isOwner && <InviteMeteringPointForm groupId={group.id} />}
         </div>
 
         {isOwner && pendingRequests.length > 0 && (
