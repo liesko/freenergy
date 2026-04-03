@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, MinLength, IsNumber, Min } from 'class-validator';
 
 export class CreateGroupDto {
   @IsString()
@@ -9,4 +9,9 @@ export class CreateGroupDto {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @IsNumber()
+  @IsOptional()
+  @Min(0)
+  pricePerKwh?: number;
 }

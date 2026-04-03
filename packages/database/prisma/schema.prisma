@@ -24,6 +24,8 @@ model User {
   firstName    String?
   lastName     String?
   isActive     Boolean  @default(true)
+  isAdmin      Boolean  @default(false)
+  budget       Float    @default(0)
   createdAt    DateTime @default(now())
   updatedAt           DateTime          @updatedAt
   ownedGroups         Group[]           @relation("GroupOwner")
@@ -61,6 +63,10 @@ model Group {
   acceptsJoinRequests        Boolean                    @default(true)
   acceptsInvitations         Boolean                    @default(true)
   acceptedMeteringPointTypes AcceptedMeteringPointType  @default(BOTH)
+
+  // Financials
+  pricePerKwh                Float                      @default(0)
+  entryFee                   Float                      @default(2)
 }
 
 enum MembershipRole {

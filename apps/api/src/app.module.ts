@@ -10,6 +10,7 @@ import { InvitationsModule } from './invitations/invitations.module';
 import { MeteringPointsModule } from './metering-points/metering-points.module';
 import { JoinRequestsModule } from './join-requests/join-requests.module';
 import { MeteringPointInvitationsModule } from './metering-point-invitations/metering-point-invitations.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { MeteringPointInvitationsModule } from './metering-point-invitations/met
     MeteringPointsModule,
     JoinRequestsModule,
     MeteringPointInvitationsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

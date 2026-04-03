@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import Link from 'next/link';
+import TopUpForm from './components/TopUpForm';
 
 async function getUser() {
   const cookieStore = await cookies();
@@ -29,16 +30,25 @@ export default async function Home() {
     return (
       <div className="min-h-screen p-8 bg-slate-50 text-slate-900 flex flex-col items-center">
         <main className="w-full max-w-4xl flex flex-col gap-8 mt-6">
-          <h1 className="text-4xl font-extrabold text-emerald-800 tracking-tight">Osobný Dashboard</h1>
           
-          <div className="flex flex-col gap-4 border border-emerald-200 bg-emerald-50 p-6 rounded-xl items-center sm:items-start text-emerald-900 shadow-sm w-full">
-            <div>
-              <strong className="text-emerald-700 uppercase tracking-wider text-xs block mb-1">Prihlásený používateľ</strong>
-              <div className="font-medium text-lg">{user.email}</div>
-              {user.firstName && <div className="text-slate-600 mt-1">{user.firstName} {user.lastName}</div>}
+          <div className="flex flex-col sm:flex-row gap-6 w-full">
+            <div className="flex flex-col gap-4 border border-emerald-200 bg-emerald-50 p-6 rounded-xl flex-1 items-start text-emerald-900 shadow-sm relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-400 opacity-10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+              <div>
+                <strong className="text-emerald-700 uppercase tracking-wider text-xs block mb-1">Prihlásený používateľ</strong>
+                <div className="font-medium text-lg">{user.email}</div>
+                {user.firstName && <div className="text-slate-600 mt-1">{user.firstName} {user.lastName}</div>}
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-emerald-200 w-full">
+                <strong className="text-emerald-700 uppercase tracking-wider text-[10px] block mb-1">Aktuálny zostatok</strong>
+                <div className="font-black text-4xl text-emerald-800 break-all">{user.budget || 0} €</div>
+              </div>
             </div>
-            
-            {/* Navigácia bola presunutá do nového Sidebar panelu */}
+
+            <div className="flex-1 shrink-0 flex justify-center sm:justify-end">
+              <TopUpForm />
+            </div>
           </div>
         </main>
       </div>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Body, Param, UseGuards, Req, Query } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, Param, UseGuards, Req, Query, ForbiddenException } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { AuthGuard } from '../auth/auth.guard';
@@ -24,6 +24,14 @@ export class GroupsController {
   @Patch(':id/policies')
   updatePolicies(@Req() req: any, @Param('id') id: string, @Body() dto: import('./dto/update-policies.dto').UpdateGroupPoliciesDto) {
     return this.groupsService.updatePolicies(id, req.user.id, dto);
+  }
+
+  @Patch(':id/entry-fee')
+  updateEntryFee(@Req() req: any, @Param('id') id: string, @Body('entryFee') entryFee: number) {
+    if (!req.user.isAdmin) {
+      throw new ForbiddenException('Iba administrátor portálu môže zmeniť vstupný poplatok.');
+    }
+    return this.groupsService.updateEntryFee(id, entryFee);
   }
 
   @Post(':id/remove-metering-point')

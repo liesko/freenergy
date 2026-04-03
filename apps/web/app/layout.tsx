@@ -9,6 +9,20 @@ import { Navigation } from './components/ui/Navigation';
 import { Sidebar } from './components/ui/Sidebar';
 import { cookies } from 'next/headers';
 
+async function getUserStatus(token: string | undefined) {
+  if (!token) return false;
+  try {
+    const API_URL = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const res = await fetch(`${API_URL}/auth/me`, {
+      headers: { Cookie: `token=${token}` },
+      cache: 'no-store'
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 export default async function RootLayout({
   children,
 }: {
@@ -16,7 +30,7 @@ export default async function RootLayout({
 }) {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
-  const isLoggedIn = !!token;
+  const isLoggedIn = await getUserStatus(token);
 
   return (
     <html lang="sk">

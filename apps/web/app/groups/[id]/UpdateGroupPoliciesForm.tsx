@@ -10,6 +10,7 @@ interface UpdateGroupPoliciesFormProps {
     acceptsJoinRequests: boolean;
     acceptsInvitations: boolean;
     acceptedMeteringPointTypes: 'BOTH' | 'PRODUCTION_ONLY' | 'CONSUMPTION_ONLY';
+    pricePerKwh: number;
   };
 }
 
@@ -19,6 +20,7 @@ export default function UpdateGroupPoliciesForm({ groupId, initialPolicies }: Up
   const [acceptsJoinRequests, setAcceptsJoinRequests] = useState(initialPolicies.acceptsJoinRequests);
   const [acceptsInvitations, setAcceptsInvitations] = useState(initialPolicies.acceptsInvitations);
   const [acceptedTypes, setAcceptedTypes] = useState(initialPolicies.acceptedMeteringPointTypes);
+  const [pricePerKwh, setPricePerKwh] = useState(initialPolicies.pricePerKwh);
   
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -41,6 +43,7 @@ export default function UpdateGroupPoliciesForm({ groupId, initialPolicies }: Up
           acceptsJoinRequests,
           acceptsInvitations,
           acceptedMeteringPointTypes: acceptedTypes,
+          pricePerKwh: Number(pricePerKwh),
         }),
       });
 
@@ -125,6 +128,20 @@ export default function UpdateGroupPoliciesForm({ groupId, initialPolicies }: Up
             <option value="PRODUCTION_ONLY">IBA VÝROBNÉ</option>
             <option value="CONSUMPTION_ONLY">IBA ODBERNÉ</option>
           </select>
+        </div>
+
+        {/* Cenník skupiny */}
+        <div className="flex flex-col gap-2 p-4 border border-slate-200 rounded-xl shadow-sm bg-white">
+          <span className="font-bold text-slate-800">Cena zdieľania (EUR / kWh)</span>
+          <span className="text-xs text-slate-500 mb-2">Nastavte odkupnú cenu za vygenerovanú elektrinu v tejto skupine.</span>
+          <input 
+            type="number" 
+            min="0"
+            step="0.01"
+            value={pricePerKwh} 
+            onChange={(e) => setPricePerKwh(Number(e.target.value))}
+            className="p-2.5 bg-white border border-slate-300 text-sm rounded-lg outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-900 transition-all font-medium hover:border-slate-400"
+          />
         </div>
 
         <button 

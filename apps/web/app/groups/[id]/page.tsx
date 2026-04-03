@@ -7,6 +7,7 @@ import HandleJoinRequestForm from './HandleJoinRequestForm';
 import ToggleDiscoverable from './ToggleDiscoverable';
 import RemoveMeteringPointButton from './RemoveMeteringPointButton';
 import UpdateGroupPoliciesForm from './UpdateGroupPoliciesForm';
+import UpdateEntryFeeForm from './UpdateEntryFeeForm';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { SectionHeader } from '../../components/ui/SectionHeader';
@@ -202,7 +203,23 @@ export default async function GroupDetailPage({ params }: PageProps) {
               <p className="text-xs text-slate-600 mt-1 font-mono break-all">{group.ownerId}</p>
             </div>
           </div>
+          
+          {/* Cenník skupiny */}
+          <div className="flex gap-4 mt-4 pt-4 border-t border-slate-200">
+             <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 flex-1">
+               <span className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Cena za energiu</span>
+               <span className="block text-xl font-black text-slate-800">{group.pricePerKwh} € <span className="text-sm font-bold text-slate-500">/ kWh</span></span>
+             </div>
+             <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 flex-1">
+               <span className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Vstupný poplatok pre odberateľov</span>
+               <span className="block text-xl font-black text-slate-800">{group.entryFee} € <span className="text-sm font-bold text-slate-500">/ rok</span></span>
+             </div>
+          </div>
         </Card>
+
+        {me?.isAdmin && (
+          <UpdateEntryFeeForm groupId={group.id} initialFee={group.entryFee} />
+        )}
 
         {isOwner && (
           <UpdateGroupPoliciesForm 
@@ -212,6 +229,7 @@ export default async function GroupDetailPage({ params }: PageProps) {
               acceptsJoinRequests: group.acceptsJoinRequests ?? true,
               acceptsInvitations: group.acceptsInvitations ?? true,
               acceptedMeteringPointTypes: group.acceptedMeteringPointTypes ?? 'BOTH',
+              pricePerKwh: group.pricePerKwh ?? 0,
             }}
           />
         )}

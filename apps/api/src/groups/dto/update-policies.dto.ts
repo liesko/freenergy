@@ -1,4 +1,4 @@
-import { IsBoolean, IsEnum, IsOptional } from 'class-validator';
+import { IsBoolean, IsEnum, IsOptional, IsNumber, Min } from 'class-validator';
 import { AcceptedMeteringPointType } from '@prisma/client';
 
 export class UpdateGroupPoliciesDto {
@@ -17,4 +17,9 @@ export class UpdateGroupPoliciesDto {
   @IsOptional()
   @IsEnum(AcceptedMeteringPointType)
   acceptedMeteringPointTypes?: AcceptedMeteringPointType;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  pricePerKwh?: number;
 }

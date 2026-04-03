@@ -12,6 +12,7 @@ export class GroupsService {
         name: createGroupDto.name,
         description: createGroupDto.description,
         ownerId: userId,
+        pricePerKwh: createGroupDto.pricePerKwh || 0,
         memberships: {
           create: {
             userId: userId,
@@ -266,6 +267,7 @@ export class GroupsService {
         acceptsJoinRequests: dto.acceptsJoinRequests,
         acceptsInvitations: dto.acceptsInvitations,
         acceptedMeteringPointTypes: dto.acceptedMeteringPointTypes,
+        pricePerKwh: dto.pricePerKwh,
       },
     });
   }
@@ -318,6 +320,16 @@ export class GroupsService {
         invitedByUserId: userId,
         status: 'PENDING',
       }
+    });
+  }
+
+  async updateEntryFee(groupId: string, entryFee: number) {
+    const group = await this.prisma.group.findUnique({ where: { id: groupId } });
+    if (!group) throw new NotFoundException('Skupina nebola nájdená');
+
+    return this.prisma.group.update({
+      where: { id: groupId },
+      data: { entryFee },
     });
   }
 }

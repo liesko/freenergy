@@ -7,6 +7,7 @@ export default function CreateGroupForm() {
   const router = useRouter();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [pricePerKwh, setPricePerKwh] = useState(0);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,7 +24,11 @@ export default function CreateGroupForm() {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ name, ...(description && { description }) }),
+        body: JSON.stringify({ 
+          name, 
+          ...(description && { description }),
+          pricePerKwh: Number(pricePerKwh)
+        }),
       });
 
       const contentType = res.headers.get('content-type');
@@ -41,6 +46,7 @@ export default function CreateGroupForm() {
 
       setName('');
       setDescription('');
+      setPricePerKwh(0);
       router.push('/groups');
       router.refresh();
     } catch (err: any) {
@@ -75,6 +81,19 @@ export default function CreateGroupForm() {
           onChange={(e) => setDescription(e.target.value)}
           className="p-3 bg-slate-50 rounded-lg border border-slate-300 shadow-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-900"
         />
+      </div>
+      
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-semibold text-slate-700">Cena zdieľania (EUR / kWh)</label>
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          value={pricePerKwh}
+          onChange={(e) => setPricePerKwh(Number(e.target.value))}
+          className="p-3 bg-slate-50 rounded-lg border border-slate-300 shadow-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-900"
+        />
+        <p className="text-xs text-slate-500">Voliteľné: Nastavte odkupnú cenu za kWh vyrobenej energie komunitou. (Základ: 0 €/kWh)</p>
       </div>
       
       <button

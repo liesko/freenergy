@@ -171,8 +171,28 @@ This repository contains a baseline `.gitlab-ci.yml` file supporting:
 - Test Placeholders
 - Database Migrations
 
+## Financial Architecture & Reporting
+
+The platform contains an integrated financial management engine to track consumption metrics and control access economics:
+
+### 1. User Budgets & Administration
+- **User Budgets:** Every user possesses a `budget` (EUR). They can utilize a mock "Card Payment Gateway" inside their Personal Dashboard (`/`) to artificially increase this budget locally.
+- **Admin Roles:** The platform introduces an `isAdmin` role natively on the User model. Administrators possess elevated control rights globally.
+
+### 2. Group Economics
+Group economics are driven by two main configurations visible securely on the `/groups/[id]` route:
+- **Price per kWh (`pricePerKwh`):** Set during Group Creation and editable exclusively by the Group Owner via the "Policies" modal. Dictates the financial buyout rate for any hardware pushing to this group.
+- **Consumer Entry Fee (`entryFee`):** An annual entry fee exclusively applied to incoming consumers. By platform regulation, **only an Administrator** (`isAdmin = true`) is allowed to change this fee. When an admin views any group, an exclusive "Administratorský prístup" control panel renders for this objective.
+
+### 3. Reporting Analytics
+- Available securely via `/reporting`.
+- Computes (mock) monthly performance extracting data across **all assigned hardware** explicitly owned by the logged-in user. 
+- Analyzes pure "Produced kWh" vs. "Consumed kWh (Community)".
+- Features standalone beautifully responsive Bar Chart graphics executed purely via Tailwind CSS rendering for massive performance scaling compared to heavy JS charting libraries.
+
 ## Intentionally Excluded
 
 As this is purely the technical foundation, the following features are not yet implemented:
-- External integrations (OKTE).
+- External integrations (OKTE true hardware readings).
 - Aggregated financial tracking and specific Notification events.
+- Physical Stripe integration (Budget top-up is a local simulation).
