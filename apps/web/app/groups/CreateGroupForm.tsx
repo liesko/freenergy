@@ -41,6 +41,7 @@ export default function CreateGroupForm() {
 
       setName('');
       setDescription('');
+      router.push('/groups');
       router.refresh();
     } catch (err: any) {
       setError(err.message || 'Počas vytvárania sa vyskytla chyba');

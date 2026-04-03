@@ -25,7 +25,7 @@ The platform centrally loads the environment variables from the root folder to e
    `JWT_SECRET="super-secret-local-key"`
    `FRONTEND_URL="http://localhost:3000"`
 
-## Authentication
+## Authentication & App Shell Dashboard
 
 The project uses a lightweight, secure custom JWT via HttpOnly cookies strategy:
 - `POST /auth/register`: Create a new user (email, password).
@@ -33,10 +33,15 @@ The project uses a lightweight, secure custom JWT via HttpOnly cookies strategy:
 - `POST /auth/logout`: Clears the cookie.
 - `GET /auth/me`: Fetches the authenticated user (requires cookie).
 
-For local development:
-- Backend CORS must be specifically configured matching `FRONTEND_URL` with `credentials: true`.
-- Frontend endpoints explicitly call API utilizing `credentials: 'include'` for HttpOnly cookies.
-- Frontend fetches dynamically compute the absolute API domain (`process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'`) and contain defensive JSON parsing to gracefully handle network failures or missed environment variables instead of returning unreadable string parse errors.
+For production resilience and seamless cross-site cookie handling, the Frontend operates as a **Proxy Bridge**. A Next.js API rewrite intercepts `/api/*` traffic and safely offloads it to the Railway/NestJS backend domain, fully preserving strict SameSite cookie policies without preflight CORS blocks.
+
+### App Shell Architecture
+The global Next.js Application utilizes a powerful App Shell decoupling mechanism:
+- **Guests:** See the standard root `RootLayout` structure featuring a full-width informational Landing Page, and top-bar navigation linking to Login/Registration models.
+- **Authenticated Users:** The global root intercepts the stored JWT footprint and transforms the physical DOM layout. Setting rendering states exclusively into a persistent **Left Sidebar** layout. Logged-in owners receive fully private modules containing `Skupiny`, `Pripojené miesta`, `Pozvánky`, `Dokumenty`, and `Reporting` entirely disconnected from public landing-page visuals.
+
+### Document Management (Pripravuje sa)
+A distinct administrative route securely hosting mandatory validation contracts (e.g., Zmluva o zdieľaní, Všeobecné obchodné podmienky) and regulatory filings. Currently initialized as a structural UI placeholder routing inside the authenticated App Shell.
 
 ## Protected Groups Foundation
 
